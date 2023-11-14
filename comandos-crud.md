@@ -73,6 +73,7 @@ DELETE FROM usuarios WHERE id = 2;
 
 ### INSERT na tabela de notícias
 
+```sql
 INSERT INTO noticias(titulo, resumo, texto, imagem, usuario_id)
 VALUES(
     'Descoberto oxigênio em Vênus',
@@ -81,7 +82,9 @@ VALUES(
     'venus.jpg',
     1
 );
+```
 
+```sql
 INSERT INTO noticias(titulo, resumo, texto, imagem, usuario_id)
 VALUES(
     'Nova versão do VSCode',
@@ -90,7 +93,9 @@ VALUES(
     'vscode.png',
     4
 );
+```
 
+```sql
 INSERT INTO noticias(titulo, resumo, texto, imagem, usuario_id)
 VALUES(
     'Onda de calor no Brasil',
@@ -99,11 +104,13 @@ VALUES(
     'sol.svg',
     3
 );
+```
 
 ### Objetivo: consulta que mostre a data e o título da notícia e o nome do autor desta notícia.
 
 #### SELECT COM JOIN (CONSULTA COM JUNÇÃO DE TABELAS)
 
+```sql
 SELECT 
     noticias.data,
     noticias.titulo,
@@ -111,6 +118,7 @@ SELECT
 
 
 -- Especificamos quais tabelas serão "Juntadas / Combinadas"
+
 
 FROM noticias JOIN usuarios
 
@@ -123,3 +131,4 @@ ON noticias.usuario_id = usuarios.id
 -- Opcional (Ordenação/Classificação pela data)
 -- DESC indica ordem decrescente (mais recente vem primeiro)
 ORDER BY data DESC;
+```
