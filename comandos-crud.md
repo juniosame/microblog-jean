@@ -19,6 +19,7 @@ VALUES('jean dos santos',
     '123456',
     'admin'
 );
+```
 
 INSERT INTO usuarios(nome, email, senha, tipo)
 VALUES(
@@ -41,7 +42,7 @@ VALUES(
     'marreta',
     'editor'
 );
-```
+
 
 ### SELECT na tabela de usuários
 
