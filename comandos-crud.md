@@ -21,6 +21,7 @@ VALUES('jean dos santos',
 );
 ```
 
+```sql
 INSERT INTO usuarios(nome, email, senha, tipo)
 VALUES(
     'Fulano da Silva',
@@ -42,30 +43,33 @@ VALUES(
     'marreta',
     'editor'
 );
-
+```
 
 ### SELECT na tabela de usuários
 
+```sql
 SELECT * FROM usuarios;
 
 SELECT nome, email FROM usuarios;
 
 SELECT nome, email FROM usuarios WHERE tipo = 'admin';
+```
 
 ### UPDATE em dados da tabela de usuários
 
+```sql
 UPDATE usuarios SET tipo = 'admin'
 WHERE id = 4;
 
 -- Obs: NUNCA ESQUEÇA DE PASSAR UMA CONDIÇÃO PARA O UPDATE!
-
+```
 
 ### DELETE em dados da tabela de usuários
-
+```sql
 DELETE FROM usuarios WHERE id = 2;
 
-
 -- Obs: NUNCA ESQUEÇA DE PASSAR UMA CONDIÇÃO PARA O DELETE!
+```
 
 ### INSERT na tabela de notícias
 
