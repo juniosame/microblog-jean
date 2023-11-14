@@ -12,7 +12,7 @@
 
 
 ### INSERT na tabela de usuarios
-
+```sql
 INSERT INTO usuarios (nome, email, senha, tipo)
 VALUES('jean dos santos',
     'jean@jean.com',
@@ -41,6 +41,7 @@ VALUES(
     'marreta',
     'editor'
 );
+```
 
 ### SELECT na tabela de usuários
 
