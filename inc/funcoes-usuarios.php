@@ -16,8 +16,19 @@ function lerUsuarios($conexao){
     $sql = "SELECT id, nome, email, tipo FROM usuarios ORDER BY nome";
     
     // Execução do comando e armazenamento do resultado da consulta/query
-    $resultado = mysqli_query($conexao, $sql) or die(mysqli_query($conexao, $sql));
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
     // Retornamos o resultado da query transformando em array associativo.
     return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+}
+
+function lerUmUsuario($conexao, $id){
+    // Montamos o sql contendo o ID do usuário que queremos carregar
+    $sql = "SELECT * FROM usuarios WHERE id = $id";
+
+    // Executamos e guardamos o resultado da consulta
+    $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+    // Retornando o resultado transformado em UM array com os dados
+    return mysqli_fetch_assoc($resultado);
 }
