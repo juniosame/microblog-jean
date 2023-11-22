@@ -43,3 +43,25 @@ function atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo){
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }
+
+function excluirUsuario( $conexao, $id){
+    $sql = "DELETE FROM usuarios WHERE id = $id";
+
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+}
+
+function login($id, $nome, $tipo){
+    /* Criação de variáveis de sessão
+    Recursps que ficam disponíveis para uso durante toda a duração da sessão, 
+    ou seja, enquanto o navegador não for fechado ou o usuário não clicar em sair. */
+
+    $_SESSION['id'] = $id;
+    $_SESSION['nome'] = $nome;
+    $_SESSION['tipo'] = $tipo;
+}
+
+function logout(){
+    session_destroy();
+    header("location:../login.php?saiu");
+    exit; // ou die()
+}
