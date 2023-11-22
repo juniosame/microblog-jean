@@ -23,7 +23,7 @@ if(isset($_POST['atualizar'])){
 		$senha = $usuario['senha']; // mantemos a mesma senha
 	} else {
 	/* Caso contrário, pegaremos a senha nova digitada e a codificamos antes de mandar para o banco */
-		$senha = password_hash($_POST['senha]'], PASSWORD_DEFAULT);
+		$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 	}
 
 	// Chamamos a função e passamos os dados
