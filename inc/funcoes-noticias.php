@@ -81,8 +81,9 @@ function lerNoticias($conexao, $idUsuario, $tipoUsuario){
 
 
 /* Usada em noticias.php e páginas da área pública */
-function formataData(){    
-    
+function formataData($data){    
+    $dataFormatada = date("d/m/Y H:i", strtotime($data)); 
+    return $dataFormatada;
 } // fim formataData
 
 
@@ -110,37 +111,39 @@ function lerUmaNoticia(
 
 
 /* Usada em noticia-atualiza.php */
-function atualizarNoticia($conexao, $titulo, $texto, $resumo, 
-$imagem, $idNoticia, $idUsuario, $tipoUsuario){
-    if($tipoUsuario == 'admin'){
-        //SQL do admin: pode atualizar qualquer notícia
-        $sql = "UPDATE noticias SET
-        titulo = '$titulo', texto = '$texto',
-        resumo = '$resumo', imagem = '$imagem'
-        WHERE id = $idNoticia";
-    } else {
-        //SQL do editor: pode atualizar SOMENTE as dele
-        $sql = "UPDATE noticias SET
-        titulo = '$titulo', texto = '$texto',
-        resumo = '$resumo', imagem = '$imagem'
-        WHERE id = $idNoticia
-            AND usuario_id = $idUsuario";
-    }
+function atualizarNoticia($conexao, $titulo, $texto, $resumo, $imagem, $idNoticia, $idUsuario, $tipoUsuario){
     
+    if($tipoUsuario == 'admin'){
+        // SQL do admin: pode atualizar QUALQUER notícia
+        $sql = "UPDATE noticias SET
+                    titulo = '$titulo', texto = '$texto',
+                    resumo = '$resumo', imagem = '$imagem'
+                WHERE id = $idNoticia";
+    } else {
+        // SQL do editor: pode atualizar SOMENTE as dele
+        $sql = "UPDATE noticias SET
+                    titulo = '$titulo', texto = '$texto',
+                    resumo = '$resumo', imagem = '$imagem'
+                WHERE id = $idNoticia 
+                    AND usuario_id = $idUsuario";
+    }
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
 } // fim atualizarNoticia
+
 
 /* Usada em noticia-exclui.php */
 function excluirNoticia($conexao, $idNoticia, $idUsuario, $tipoUsuario){
     if($tipoUsuario == 'admin'){
         $sql = "DELETE FROM noticias WHERE id = $idNoticia";
     } else {
-        $sql = "DELETE FROM noticias  WHERE id = $idNoticia AND usuario_id = $idUsuario";
+        $sql = "DELETE FROM noticias 
+                WHERE id = $idNoticia 
+                AND usuario_id = $idUsuario";
     }
 
-   mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
 } // fim excluirNoticia
 
@@ -156,26 +159,45 @@ function lerTodasAsNoticias($conexao){
     $sql = "SELECT titulo, resumo, imagem, id
             FROM noticias ORDER BY data DESC";
     
-    $resultado = mysqli_query($conexao, $sql)
+    $resultado = mysqli_query($conexao, $sql) 
                 or die(mysqli_error($conexao));
-    return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
+    return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
 } // fim lerTodasAsNoticias
 
 
 /* Usada em noticia.php */
-function lerDetalhes($conexao){
-    
+function lerDetalhes($conexao, $id){
+    $sql = "SELECT 
+                noticias.id, 
+                noticias.titulo, 
+                noticias.data, 
+                noticias.imagem,
+                noticias.texto,
+                usuarios.nome AS autor
+            FROM noticias JOIN usuarios
+            ON noticias.usuario_id = usuarios.id
+            WHERE noticias.id = $id";
 
-    // mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+    $resultado = mysqli_query($conexao, $sql) 
+                or die(mysqli_error($conexao));
+
+    return mysqli_fetch_assoc($resultado);
 
 } // fim lerDetalhes
 
 
 /* Usada em resultados.php */
-function busca($conexao){
+function busca($conexao, $termoDigitado){ 
+    $sql = "SELECT * FROM noticias
+            WHERE titulo LIKE '%$termoDigitado%'  OR
+                resumo LIKE '%$termoDigitado%'  OR
+                texto  LIKE '%$termoDigitado%'
+            ORDER BY data DESC";
     
-    // mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+    $resultado = mysqli_query($conexao, $sql) 
+                or die (mysqli_error($conexao));
 
+    return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 } // fim busca
